@@ -19,3 +19,19 @@ square.width = square.height = squareWidth;
 square.tint = 0xea985d;
 
 app.stage.addChild(square);
+
+app.ticker.add((delta) =>
+{
+	const cursorPosition = app.renderer.plugins.interaction.mouse.global;
+	let angle = Math.atan2
+	(
+		cursorPosition.y- square.position.y,
+		cursorPosition.x - square.position.x
+	) + Math.PI / 2;
+	square.rotation = angle;
+});
+
+function randomSpawnPoint()
+{
+	let edge = Math.floor(Math.random() * 4); // random int between 0 and 3 inclusive
+}
