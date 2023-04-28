@@ -10,11 +10,23 @@ export default class Shooting
 		this.bulletSpeed = 4;
 		this.bullets = [];
 		this.bulletRadius = 8;
-		this.maxBulltets = 3;
+		this.maxBullets = 100;
 	}
 
 	fire()
 	{
+		if (this.bullets.length >= this.maxBullets)
+		{
+			let b = this.bullets.shift();
+			this.app.stage.removeChild(b)
+		}
+
+		this.bullets.forEach((b) => this.app.stage.removeChild(b));
+		this.bullets = this.bullets.filter((b) =>
+			Math.abs(b.position.x) < this.app.screen.width &&
+			Math.abs(b.position.y) < this.app.screen.height);
+		this.bullets.forEach((b) => this.app.stage.addChild(b));
+
 		const bullet = new PIXI.Graphics();
 		bullet.position.set(this.player.position.x, this.player.position.y);
 		bullet.beginFill(0x0000ff, 1);
@@ -24,6 +36,7 @@ export default class Shooting
 		bullet.velocity = new Victor(Math.cos(angle), Math.sin(angle)).multiplyScalar(this.bulletSpeed);
 		this.bullets.push(bullet);
 		this.app.stage.addChild(bullet);
+		console.log(this.bullets.length, this.app.stage.children.length);
 	}
 
 	set shoot(shooting)
