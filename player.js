@@ -16,6 +16,8 @@ export default class Player
 		this.lastMouseButoon = 0;
 		this.shooting = new Shooting({ app, player:this });
 		//HEALTHBAR
+		this.maxHealth = 100;
+		this.health = this.maxHealth;
 		const margin = 16;
 		const barHeight = 8;
 		this.healthBar = new PIXI.Graphics();
@@ -29,7 +31,13 @@ export default class Player
 		this.healthBar.zIndex = 1;
 		this.app.stage.sortableChildren = true;
 		this.app.stage.addChild(this.healthBar);
-	
+	}
+
+	attack()
+	{
+		this.health -= 1;
+		this.healthBar.width = (this.health/this.maxHealth) * this.healthBar.initialWidth;
+		if (this.health <= 0) this.dead = true;
 	}
 
 	get position()
