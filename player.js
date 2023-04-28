@@ -52,6 +52,7 @@ export default class Player
 
 	update()
 	{
+		if (this.dead) return;
 		const mouse = this.app.renderer.plugins.interaction.mouse;
 		const cursorPosition = mouse.global;
 		let angle = Math.atan2
